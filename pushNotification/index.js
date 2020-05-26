@@ -5,6 +5,7 @@ const follows = require('./controllers/follow');
 const notification = require('./controllers/notification');
 const subscriber = require('./controllers/subscriber');
 const like = require('./controllers/like');
+const review = require('./controllers/review');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +21,7 @@ app.use('/notification/push', notification);
 app.use('/notification/push/follows', follows);
 app.use('/notification/push/subcriber', subscriber);
 app.use('/notification/push/likes', like);
+app.use('/notification/push/reviews', review);
 const PORT = 5003;
 app.listen(PORT, () => {
     console.log(`notification system now listening on port ${PORT}`)
