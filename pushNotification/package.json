@@ -1,5 +1,5 @@
 {
-  "name": "pushNotification",
+  "name": "push-notification",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
