@@ -28,6 +28,23 @@ router.post('/send-phone-verification-code', async (req, res) => {
     }
 });
 
+router.post('/delete-account', async (req, res) => {
+    try {
+        const message = req.body.message
+        const phoneNumber = req.body.phoneNumber;
+        await client.messages.create({
+            body: message,
+            from: +12513027428,
+            to: phoneNumber,
+          }).then((message) => {
+            const messageBody = message.body;
+            res.status(200).send(messageBody);
+          });
+    } catch (error) {
+        throw error        
+    }
+});
+
 router.post('/verify-phone', async (req, res) => {
     const phoneNumber = req.body.phoneNumber;
     try {
@@ -46,4 +63,4 @@ router.post('/verify-phone', async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = router;
