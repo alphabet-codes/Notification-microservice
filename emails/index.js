@@ -13,9 +13,9 @@ mongoose.connect('mongodb://localhost:27017/seamsville', ({useNewUrlParser: true
 }).catch((error) => {
     throw error
 });
-app.use('/email/forgot-password', forgotPassword);
+app.use('/notification/email', forgotPassword);
 
 const PORT = 5004;
 app.listen(PORT, () => {
-    console.log(`notification system now listening on port ${PORT}`)
+    console.log(`email notification system now listening on port ${PORT}`)
 });
