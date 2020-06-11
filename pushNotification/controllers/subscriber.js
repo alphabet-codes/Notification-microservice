@@ -53,7 +53,7 @@ router.post('/notify-collection', async (req, res) => {
     } = req.body;
     try {
         // Check notification type
-        const getType = await NotificationType.findOne({name: 'subscribe'});
+        const getType = await NotificationType.findOne({name: 'collection'});
         if(getType){
             recipientIds.forEach(recipient => {
                 const newNotification = new Notification({
