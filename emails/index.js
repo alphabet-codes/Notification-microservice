@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const forgotPassword = require('./controllers/forgotPassword');
+const welcome = require('./controllers/welcome');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://localhost:27017/seamsville', ({useNewUrlParser: true
     throw error
 });
 app.use('/notification/email', forgotPassword);
+app.use('/notification/email', welcome);
 
 const PORT = 5004;
 app.listen(PORT, () => {
