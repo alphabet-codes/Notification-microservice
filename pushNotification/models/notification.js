@@ -18,11 +18,15 @@ const notificationSchema = new Schema({
         default: false
     },
     recipientId:{
-        type: Schema.Types.ObjectId,
+        type: String,
+        require
+    },
+    contentId:{
+        type: String,
         require
     },
     senderId:{
-        type: Schema.Types.ObjectId,
+        type: Object,
         require
     },
     deleted: {

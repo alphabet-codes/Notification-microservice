@@ -13,11 +13,13 @@ const emptyChecker = (obj) => {
 }
 
 router.post('/all', async (req, res) => {
-    const id = req.body.id;
+    const username = req.body.username;
+    console.log(req.body);
     try {
-        const getNotifications = await Notification.find().where('recipientId').in(id).exec();
+        const getNotifications = await Notification.find().where('recipientId').in(username)
+        .sort({ date: -1 }).exec();
         emptyChecker(getNotifications);
-        console.log(id);
+        console.log(username);
         if(isEmpty === false){
             res.status(200).send(getNotifications)
         }else{

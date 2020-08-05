@@ -3,8 +3,6 @@ const twilio = require('twilio');
 const router = express.Router();
 require('dotenv').config();
 
-// Random nuber for verification generator
-const randomNumber = Math.floor(100000 + Math.random() * 900000);
 // Twilio token
 const ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
@@ -12,6 +10,8 @@ const client = new twilio(ACCOUNT_SID, AUTH_TOKEN);
 
 router.post('/send-phone-verification-code', async (req, res) => {
     try {
+        // Random nuber for verification generator
+        const randomNumber = Math.floor(100000 + Math.random() * 900000);
         const phoneNumber = req.body.phoneNumber;
         await client.messages.create({
             body: randomNumber,
@@ -24,7 +24,7 @@ router.post('/send-phone-verification-code', async (req, res) => {
             res.status(200).send(verificationCode);
           });
     } catch (error) {
-        throw error        
+        res.status(500).send(error.message);   
     }
 });
 

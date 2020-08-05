@@ -7,7 +7,8 @@ router.post('/comment', async (req, res) => {
     const {
         recipientId,
         senderId,
-        message
+        message,
+        contentId
     } = req.body;
     try {
         // Check notification type
@@ -17,7 +18,8 @@ router.post('/comment', async (req, res) => {
                 type: getType.name,
                 recipientId,
                 senderId,
-                message
+                message,
+                contentId
             });
             newNotification.save();
             res.status(200).send('notification sent');
@@ -32,7 +34,8 @@ router.post('/comment', async (req, res) => {
                     type: response.name,
                     recipientId,
                     senderId,
-                    message
+                    message,
+                    contentId
                 });
                 newNotification.save();
                 res.status(200).send('notification sent');
