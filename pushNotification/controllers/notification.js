@@ -35,12 +35,16 @@ router.put('/read', async(req, res) => {
             user
         } = req.body;
         const getNotification = await Notification.findById(notificationId)
-        if(!getNotification) return res.status(400).send('can\'t find this notification');
-        if(getNotification && getNotification.reciepientId.username === user){
+        if(getNotification && getNotification.recipientId === user){
+            console.log(getNotification);
             getNotification.read = true;
-            await getNotification.save();
-            return res.status(200).send('successfully read notification');
+            getNotification.save().then(() => {
+                console.log(getNotification);
+                res.status(200).send('successfully read notification')
+            })
+            .catch((err) => res.status(500).send('something went wrong while trying to read data'));
         }
+        if(!getNotification) return res.status(400).send('can\'t find this notification');
     }catch(err){
         throw err;
     }
