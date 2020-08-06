@@ -10,6 +10,7 @@ router.post('/like', async (req, res) => {
         message,
         contentId
     } = req.body;
+    console.log(contentId)
     try {
         // Check notification type
         const getType = await NotificationType.findOne({name: 'like'});
