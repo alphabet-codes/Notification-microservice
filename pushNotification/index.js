@@ -30,6 +30,7 @@ app.use('/notification/push/posts', post);
 app.use('/notification/push/comments', comment);
 app.use('/notification/push/replies', reply);
 app.use('/notification/push/message', message);
+
 const PORT = 5003;
 app.listen(PORT, () => {
     console.log(`notification system now listening on port ${PORT}`)

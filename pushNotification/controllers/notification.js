@@ -21,7 +21,7 @@ router.post('/all', async (req, res) => {
         if(isEmpty === false){
             res.status(200).send(getNotifications)
         }else{
-            res.status(200).send('You\'ve no notifications yet')
+            res.status(204).send('You\'ve no notifications yet')
         }
     } catch (error) {
         throw error
