@@ -22,15 +22,15 @@ router.post('/like', async (req, res) => {
                 message,
                 contentId
             });
-            newNotification.save();
-            res.status(200).send('notification sent');
+            await newNotification.save();
+            return res.status(200).send('notification sent');
         }else{
             const newNotificationType = new NotificationType({
                 name: 'like',
                 description: 'notification for anything related to likes'
             });
             newNotificationType.save()
-            .then((response) => {
+            .then(async(response) => {
                 const newNotification = new Notification({
                     type: response.name,
                     recipientId,
@@ -38,14 +38,14 @@ router.post('/like', async (req, res) => {
                     message,
                     contentId
                 });
-                newNotification.save();
-                res.status(200).send('notification sent');
+                await newNotification.save();
+                return res.status(200).send('notification sent');
             }).catch((error)=> {
-                throw error;
+                return res.status(500).send(error.message)
             })
         }
     } catch (error) {
-        throw error 
+        return res.status(500).send(error.message);
     }
 });
 
