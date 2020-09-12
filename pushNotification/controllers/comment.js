@@ -21,8 +21,13 @@ router.post('/comment', async (req, res) => {
                 message,
                 contentId
             });
-            newNotification.save();
-            res.status(200).send('notification sent');
+            newNotification.save()
+            .then((data) => {
+                console.log(data);
+                return res.status(200).send('notification sent');
+            }).catch((err) => {
+                return res.status(500).send(err.message);
+            });
         }else{
             const newNotificationType = new NotificationType({
                 name: 'comment',
@@ -38,13 +43,11 @@ router.post('/comment', async (req, res) => {
                     contentId
                 });
                 newNotification.save();
-                res.status(200).send('notification sent');
-            }).catch((error)=> {
-                throw error;
-            })
+                return res.status(200).send('notification sent');
+            }).catch((error)=>  res.status(500).send(error.message))
         }
     } catch (error) {
-        throw error 
+        return res.status(500).send(error.message)
     }
 });
 
