@@ -15,16 +15,18 @@ router.post('/send-phone-verification-code', async (req, res) => {
         const phoneNumber = req.body.phoneNumber;
         await client.messages.create({
             body: randomNumber,
-            from: +12513027428,
+            from: +13345183051,
             to: phoneNumber,
           }).then((message) => {
             const messageBody = message.body;
             const code = messageBody.match(/\d+/g);
             const verificationCode = code.toString();
             res.status(200).send(verificationCode);
-          });
+          }).catch((error) => {
+            return res.status(500).send(error); 
+          })
     } catch (error) {
-        res.status(500).send(error.message);   
+        return res.status(500).send(error);   
     }
 });
 
@@ -34,14 +36,14 @@ router.post('/delete-account', async (req, res) => {
         const phoneNumber = req.body.phoneNumber;
         await client.messages.create({
             body: message,
-            from: +12513027428,
+            from: +13345183051,
             to: phoneNumber,
           }).then((message) => {
             const messageBody = message.body;
             res.status(200).send(messageBody);
           });
     } catch (error) {
-        throw error        
+        res.status(500).send(error);      
     }
 });
 
@@ -50,16 +52,16 @@ router.post('/verify-phone', async (req, res) => {
     try {
         client.messages.create({
             body: `Your phone ${phoneNumber} has been verified by the seamsville team. Thank you for choosing seamsville`,
-            from: +12513027428,
+            from: +13345183051,
             to: phoneNumber,
           }).then((message) => {
-              res.status(200).send('Successfully verified phone');
+              return res.status(200).send('Successfully verified phone');
           })
           .catch((error) => {
-            throw error;
+            return res.status(500).send(error);
           });
     } catch (error) {
-        throw error
+        return res.status(500).send(error);
     }
 })
 
