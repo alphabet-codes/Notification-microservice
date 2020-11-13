@@ -15,12 +15,11 @@ const emptyChecker = (obj) => {
 router.get('/all/messages', async(req, res) => {
     try {
         const username = req.header('username');
-        const getNotifications = await Notification.find({'reciepientId': username, 'type': {$eq: 'message'}, 'read': {$eq:'false'}})
+        const getNotifications = await Notification.find({'recipientId': username, type: {$eq: 'message'}, read: {$eq:false}})
         .sort({date: -1}).exec();
         if(emptyChecker(getNotifications)){
             return res.status(204).send('no notifications yet')
         }else{
-            console.log(getNotifications);
             return res.status(200).send(getNotifications);
         }
     } catch (error) {
@@ -31,17 +30,14 @@ router.get('/all/messages', async(req, res) => {
 router.get('/all', async (req, res) => {
     const username = req.header('username');
     try {
-        const getNotifications = await Notification.find({'recipientId': username, 'type': {$ne: 'message'}})
+        const getNotifications = await Notification.find({recipientId: username, type: {$ne: 'message'}})
         .sort({ date: -1 }).exec();
-        emptyChecker(getNotifications);
-        console.log(getNotifications);
-        if(isEmpty === false){
-            res.status(200).send(getNotifications)
-        }else{
-            res.status(204).send('You\'ve no notifications yet')
+        if(emptyChecker(getNotifications)){
+            return res.status(204).send('You\'ve no notifications yet')
         }
+        return res.status(200).send(getNotifications)
     } catch (error) {
-        res.status(500).send(error);
+        return res.status(500).send(error);
     }
 });
 
@@ -62,6 +58,30 @@ router.put('/read', async(req, res) => {
         if(!getNotification) return res.status(400).send('can\'t find this notification');
     }catch(err){
         return res.status(200).send(err);
+    }
+});
+
+router.put('/read/messages', async(req, res) => {
+    try {
+        const {
+            recipient,
+            sender
+        } = req.body;
+        const getNotification = await Notification.updateMany({
+            $and: [
+                {recipientId: {$eq: recipient}},
+                {'senderId.username': {$eq: sender}},
+                {type: {$eq: 'message'}},
+                {read: {$eq:false}}
+            ]
+        }, {
+            $set: {
+                read: true
+            }
+        });
+        return res.status(200).send('all messages are read');
+    } catch (error) {
+        return res.status(500).send(error);
     }
 })
 
