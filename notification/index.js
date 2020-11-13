@@ -10,12 +10,13 @@ const post = require('./src/controllers/post');
 const comment = require('./src/controllers/comment');
 const reply = require('./src/controllers/reply');
 const message = require('./src/controllers/message');
+const {DB_URI} = require('./src/config/index')
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/seamsville', ({useNewUrlParser: true}))
+mongoose.connect(DB_URI, ({useNewUrlParser: true}))
 .then(() => {
     console.log('App now listening to db')
 }).catch((error) => {
@@ -30,8 +31,8 @@ app.use('/api/v1/notification/push/posts', post);
 app.use('/api/v1/notification/push/comments', comment);
 app.use('/api/v1/notification/push/replies', reply);
 app.use('/api/v1/notification/push/message', message);
-app.get('/api/v1/notification', (req, res) => {
-    return res.send('Hello services')
+app.get('/api/v1/notification/push', (req, res) => {
+    return res.send('Welcome to the push notification endpoint')
 });
 
 const PORT = 5003;
