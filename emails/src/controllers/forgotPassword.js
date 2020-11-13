@@ -24,7 +24,7 @@ router.post('/reset-password', (req, res) => {
     };
     sgMail.send(msg)
     .then(() => {
-       return res.status(202).send('successfully sent email')
+       return res.status(202).send(resetToken)
     })
     .catch((error) => {
       return res.status(500).send(error);

@@ -21,7 +21,7 @@ router.post('/send-phone-verification-code', async (req, res) => {
             const messageBody = message.body;
             const code = messageBody.match(/\d+/g);
             const verificationCode = code.toString();
-            res.status(200).send(verificationCode);
+            return res.status(200).send(verificationCode);
           }).catch((error) => {
             return res.status(500).send(error); 
           })

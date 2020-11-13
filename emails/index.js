@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const forgotPassword = require('./controllers/forgotPassword');
 const welcome = require('./controllers/welcome');
 const app = express();
@@ -8,14 +7,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/seamsville', ({useNewUrlParser: true}))
-.then(() => {
-    console.log('App now listening to db')
-}).catch((error) => {
-    throw error
-});
 app.use('/api/v1/notification/email', forgotPassword);
 app.use('/api/v1/notification/email', welcome);
+app.get('/api/v1/notification/email', (req, res) => {
+    return res.send('Welcome to the email notification endpoint')
+});
 
 const PORT = 5004;
 app.listen(PORT, () => {
