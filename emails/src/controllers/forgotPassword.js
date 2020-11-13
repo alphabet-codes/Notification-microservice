@@ -24,10 +24,10 @@ router.post('/reset-password', (req, res) => {
     };
     sgMail.send(msg)
     .then(() => {
-       res.status(202).send('successfully sent email')
+       return res.status(202).send('successfully sent email')
     })
     .catch((error) => {
-        throw error
+      return res.status(500).send(error);
     })
 });
 
@@ -50,10 +50,10 @@ router.post('/reset-successful', (req, res) => {
     };
     sgMail.send(msg)
     .then(() => {
-       res.status(202).send('successfully sent email')
+       return res.status(202).send('successfully sent email')
     })
     .catch((error) => {
-        throw error
+        return res.status(500).send(error);
     })
 });
 

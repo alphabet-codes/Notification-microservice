@@ -14,8 +14,8 @@ mongoose.connect('mongodb://localhost:27017/seamsville', ({useNewUrlParser: true
 }).catch((error) => {
     throw error
 });
-app.use('/notification/email', forgotPassword);
-app.use('/notification/email', welcome);
+app.use('/api/v1/notification/email', forgotPassword);
+app.use('/api/v1/notification/email', welcome);
 
 const PORT = 5004;
 app.listen(PORT, () => {

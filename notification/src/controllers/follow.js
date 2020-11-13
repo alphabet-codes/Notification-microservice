@@ -35,13 +35,13 @@ router.post('/follow', async (req, res) => {
                     message
                 });
                 newNotification.save();
-                res.status(200).send('notification sent');
+                return res.status(200).send('notification sent');
             }).catch((error)=> {
-                throw error;
+                return res.status(500).send(error);
             })
         }
     } catch (error) {
-        throw error 
+        return res.status(500).send(error);
     }
 });
 
@@ -91,7 +91,7 @@ router.post('/notify-followers/collections', async (req, res) => {
             })
         }
     } catch (error) {
-        throw error 
+        return res.status(500).send(error);
     }
 });
 
